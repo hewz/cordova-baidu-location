@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  id="com.hewz.plugins.baidu.location"
+  version="1.0.0">
+  <name>BaiduLocation</name>
+
+  <js-module src="www/baidu_location.js" name="baidu_location">
+    <clobbers target="baidu_location" />
+  </js-module>
+
+  <preference name="API_KEY" />
+
+  <!-- android -->
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="BaiduLocation">
+        <param name="android-package" value="com.hewz.plugins.baidu.BaiduLocation" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <!-- 这个权限用于进行网络定位-->
+      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+      <!-- 这个权限用于访问GPS定位-->
+      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+      <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+      <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+      <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+      <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+      <!-- 用于读取手机当前的状态-->
+      <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+      <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+      <!-- 访问网络，网络定位需要上网-->
+      <uses-permission android:name="android.permission.INTERNET" />
+      <!-- SD卡读取权限，用户写入离线定位数据-->
+      <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <!-- 在application标签中声明service组件,每个app拥有自己单独的定位service -->
+      <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote" />
+      <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$API_KEY" />
+    </config-file>
+
+    <source-file src="src/android/BaiduLocation.java" target-dir="src/com/hewz/plugins/baidu" />
+    <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi" />
+    <source-file src="libs/android/armeabi-v7a/liblocSDK6a.so" target-dir="libs/armeabi-v7a" />
+    <source-file src="libs/android/arm64-v8a/liblocSDK6a.so" target-dir="libs/arm64-v8a" />
+    <source-file src="libs/android/x86/liblocSDK6a.so" target-dir="libs/x86" />
+    <source-file src="libs/android/x86_64/liblocSDK6a.so" target-dir="libs/x86_64" />
+    <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs" />
+  </platform>
+
+</plugin>
