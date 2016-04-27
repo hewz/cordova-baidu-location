@@ -18,26 +18,33 @@ import com.baidu.location.LocationClientOption.LocationMode;
  * ionic 百度定位插件 for android
  *
  * @author hewz
- *
  */
 public class BaiduLocation extends CordovaPlugin {
 
-    /** LOG TAG */
+    /**
+     * LOG TAG
+     */
     private static final String LOG_TAG = BaiduLocation.class.getSimpleName();
 
-    /** JS回调接口对象 */
+    /**
+     * JS回调接口对象
+     */
     public static CallbackContext cbCtx = null;
 
-    /** 百度定位客户端 */
+    /**
+     * 百度定位客户端
+     */
     public LocationClient mLocationClient = null;
 
     public boolean stopListen = true;
 
-    /** 百度定位监听 */
+    /**
+     * 百度定位监听
+     */
     public BDLocationListener myListener = new BDLocationListener() {
         @Override
         public void onReceiveLocation(BDLocation location) {
-            LOG.e(LOG_TAG, "location received..");
+            LOG.d(LOG_TAG, "location received..");
             try {
                 JSONObject json = new JSONObject();
 
@@ -48,14 +55,14 @@ public class BaiduLocation extends CordovaPlugin {
                 json.put("radius", location.getRadius());
 
 
-                if (location.getLocType() == BDLocation.TypeGpsLocation){// GPS定位结果
+                if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
                     json.put("speed", location.getSpeed());
                     json.put("satellite", location.getSatelliteNumber());
                     json.put("height", location.getAltitude());
                     json.put("direction", location.getDirection());
                     json.put("address", location.getAddrStr());
                     json.put("describe", "GPS定位成功");
-                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation){// 网络定位结果
+                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
                     json.put("address", location.getAddrStr());
                     json.put("operators", location.getOperators());
                     json.put("describe", "网络定位成功");
@@ -80,7 +87,7 @@ public class BaiduLocation extends CordovaPlugin {
                 pluginResult.setKeepCallback(true);
                 cbCtx.sendPluginResult(pluginResult);
             } finally {
-                if(stopListen)
+                if (stopListen)
                     mLocationClient.stop();
             }
         }
@@ -107,28 +114,27 @@ public class BaiduLocation extends CordovaPlugin {
             }
             // 配置定位SDK参数
             initLocation(0);
-            if(mLocationClient.isStarted())
+            if (mLocationClient.isStarted())
                 mLocationClient.stop();
             mLocationClient.start();
             ret = true;
-        }
-        else if("watchPosition".equalsIgnoreCase(action)) {
-            LOG.e(LOG_TAG, " true ");
+        } else if ("watchPosition".equalsIgnoreCase(action)) {
             stopListen = false;
             if (mLocationClient == null) {
                 mLocationClient = new LocationClient(this.webView.getContext());
                 mLocationClient.registerLocationListener(myListener);
             }
 
+            int span = args.getInt(0);
+
             // 配置定位SDK参数
-            initLocation(2*1000);
-            if(mLocationClient.isStarted())
+            initLocation(span * 1000);
+            if (mLocationClient.isStarted())
                 mLocationClient.stop();
             mLocationClient.start();
             ret = true;
-        }
-        else if("clearWatch".equalsIgnoreCase(action)) {
-            if(mLocationClient != null && mLocationClient.isStarted())
+        } else if ("clearWatch".equalsIgnoreCase(action)) {
+            if (mLocationClient != null && mLocationClient.isStarted())
                 mLocationClient.stop();
             ret = true;
         }
@@ -145,7 +151,7 @@ public class BaiduLocation extends CordovaPlugin {
         // 可选，默认gcj02，设置返回的定位结果坐标系
         option.setCoorType("bd09ll");
         // 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        if(stopListen)
+        if (stopListen)
             option.setScanSpan(0);
         else
             option.setScanSpan(span);
