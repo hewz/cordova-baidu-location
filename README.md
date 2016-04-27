@@ -1,13 +1,11 @@
 #Cordova/ionic 百度地图定位Android版插件
 
------
 
 本插件是cordova-qdc-baidu-location的升级版,利用百度定位SDK为Web app解决大陆Android定位不准的问题。
 相比原插件，更新百度地图Android版定位SDK（v6.2.3）并提供watchPosition和clearWatch方法。 iOS下并无定位不准问题，可直接使用浏览器定位。
 
 原插件在此 https://github.com/mrwutong/cordova-qdc-baidu-location ，感谢作者mrwutong
 
------
 
 
 ###一，申请密钥
