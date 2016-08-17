@@ -30,7 +30,7 @@ baidu_location.clearWatch(successCallback, failedCallback);
 ```
 {
   latitude : 纬度,
-  lontitude: 经度,
+  longitude: 经度,
   ...
 }
 ```
