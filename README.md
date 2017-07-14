@@ -2,7 +2,8 @@
 
 
 利用百度定位SDK为Web app解决Android在大陆定位不准的问题。iOS下并无定位不准问题，可直接使用浏览器定位。
-已更新百度地图Android版定位SDK（v7.1）并提供watchPosition和clearWatch方法。 
+
+已更新百度地图Android版定位SDK（v7.1）并提供watchPosition和clearWatch方法。[Demo](https://github.com/hewz/BDLocationDemo)
 
 
 ### 一，申请密钥
