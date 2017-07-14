@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
-  id="com.hewz.plugins.baidu.location"
+  id="hewz.plugins.baidu-location"
   version="1.0.0">
   <name>BaiduLocation</name>
 
@@ -48,11 +48,11 @@
     </config-file>
 
     <source-file src="src/android/BaiduLocation.java" target-dir="src/com/hewz/plugins/baidu" />
-    <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi" />
-    <source-file src="libs/android/armeabi-v7a/liblocSDK6a.so" target-dir="libs/armeabi-v7a" />
-    <source-file src="libs/android/arm64-v8a/liblocSDK6a.so" target-dir="libs/arm64-v8a" />
-    <source-file src="libs/android/x86/liblocSDK6a.so" target-dir="libs/x86" />
-    <source-file src="libs/android/x86_64/liblocSDK6a.so" target-dir="libs/x86_64" />
+    <source-file src="libs/android/armeabi/liblocSDK7a.so" target-dir="libs/armeabi" />
+    <source-file src="libs/android/armeabi-v7a/liblocSDK7a.so" target-dir="libs/armeabi-v7a" />
+    <source-file src="libs/android/arm64-v8a/liblocSDK7a.so" target-dir="libs/arm64-v8a" />
+    <source-file src="libs/android/x86/liblocSDK7a.so" target-dir="libs/x86" />
+    <source-file src="libs/android/x86_64/liblocSDK7a.so" target-dir="libs/x86_64" />
     <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs" />
   </platform>
 

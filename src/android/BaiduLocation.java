@@ -91,6 +91,11 @@ public class BaiduLocation extends CordovaPlugin {
                     mLocationClient.stop();
             }
         }
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+            LOG.e(LOG_TAG, "onConnectHotSpotMessage: " + s + "; " + i);
+        }
     };
 
     /**
@@ -102,9 +107,6 @@ public class BaiduLocation extends CordovaPlugin {
 
         boolean ret = false;
         cbCtx = callbackContext;
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-        pluginResult.setKeepCallback(true);
-        cbCtx.sendPluginResult(pluginResult);
 
         if ("getCurrentPosition".equalsIgnoreCase(action)) {
             stopListen = true;
@@ -137,6 +139,9 @@ public class BaiduLocation extends CordovaPlugin {
             if (mLocationClient != null && mLocationClient.isStarted())
                 mLocationClient.stop();
             ret = true;
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+            pluginResult.setKeepCallback(false);
+            cbCtx.sendPluginResult(pluginResult);
         }
         return ret;
     }
