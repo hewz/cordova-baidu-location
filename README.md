@@ -3,7 +3,7 @@
 
 利用百度定位SDK为Web app解决Android在大陆定位不准的问题。iOS下并无定位不准问题，可直接使用浏览器定位。更新自[mrwutong](https://github.com/mrwutong/cordova-qdc-baidu-location)
 
-已更新百度地图Android版定位SDK（v7.1）并提供watchPosition和clearWatch方法。[Demo](https://github.com/hewz/BDLocationDemo)
+已更新百度地图Android版定位SDK（v7.2）并提供watchPosition和clearWatch方法。[Demo](https://github.com/hewz/BDLocationDemo)
 
 
 ### 一，申请密钥
@@ -30,6 +30,8 @@ baidu_location.clearWatch(successCallback, failedCallback);
 }
 ```
 具体字段内容请参照：[BDLocation](http://developer.baidu.com/map/loc_refer/index.html)
+
+若定位失败请参考官方错误码
 
 ### 删除插件
 ```
