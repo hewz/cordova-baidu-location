@@ -8,8 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
@@ -41,7 +41,7 @@ public class BaiduLocation extends CordovaPlugin {
     /**
      * 百度定位监听
      */
-    public BDLocationListener myListener = new BDLocationListener() {
+    public BDAbstractLocationListener myListener = new BDAbstractLocationListener () {
         @Override
         public void onReceiveLocation(BDLocation location) {
             LOG.d(LOG_TAG, "location received..");
@@ -53,27 +53,40 @@ public class BaiduLocation extends CordovaPlugin {
                 json.put("latitude", location.getLatitude());
                 json.put("longitude", location.getLongitude());
                 json.put("radius", location.getRadius());
+                json.put("address", location.getAddrStr());
 
+                json.put("locationID", location.getLocationID());
+                json.put("country", location.getCountry());
+                json.put("countryCode", location.getCountryCode());
+                json.put("city", location.getCity());
+                json.put("cityCode", location.getCityCode());
+                json.put("district", location.getDistrict());
+                json.put("street", location.getStreet());
+                json.put("streetNumber", location.getStreetNumber());
+                json.put("locationDescribe", location.getLocationDescribe());
+                json.put("poiList", location.getPoiList());
+
+                json.put("buildingID", location.getBuildingID());
+                json.put("buildingName", location.getBuildingName());
+                json.put("floor", location.getFloor());
 
                 if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
                     json.put("speed", location.getSpeed());
                     json.put("satellite", location.getSatelliteNumber());
                     json.put("height", location.getAltitude());
                     json.put("direction", location.getDirection());
-                    json.put("address", location.getAddrStr());
                     json.put("describe", "GPS定位成功");
                 } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                    json.put("address", location.getAddrStr());
                     json.put("operators", location.getOperators());
                     json.put("describe", "网络定位成功");
                 } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
                     json.put("describe", "离线定位成功，离线定位结果也是有效的");
                 } else if (location.getLocType() == BDLocation.TypeServerError) {
-                    json.put("describe", "服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+                    json.put("describe", "服务端网络定位失败，可将定位唯一ID、IMEI、定位失败时间反馈至loc-bugs@baidu.com");
                 } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
                     json.put("describe", "网络不同导致定位失败，请检查网络是否通畅");
                 } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                    json.put("describe", "无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+                    json.put("describe", "当前缺少定位依据，可能是用户没有授权，建议弹出提示框让用户开启权限");
                 }
 
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, json);
@@ -92,10 +105,6 @@ public class BaiduLocation extends CordovaPlugin {
             }
         }
 
-        @Override
-        public void onConnectHotSpotMessage(String s, int i) {
-            LOG.e(LOG_TAG, "onConnectHotSpotMessage: " + s + "; " + i);
-        }
     };
 
     /**
